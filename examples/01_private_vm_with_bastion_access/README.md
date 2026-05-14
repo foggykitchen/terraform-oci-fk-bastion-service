@@ -7,10 +7,13 @@ This example is intentionally focused on the **private-instance access path**:
 - outbound egress is handled by **NAT Gateway**
 - inbound SSH is allowed only from the **dedicated bastion subnet**
 - the SSH key pair is generated automatically with the **TLS provider**
+- the Compute module enables the **OCI Bastion plugin** required for `MANAGED_SSH`
 
 ---
 
-## Architecture Overview
+## 🧭 Architecture Overview
+
+<img src="01_private_vm_with_bastion_access_architecture.png" width="900"/>
 
 This deployment creates:
 - a dedicated **VCN** and two subnets using `terraform-oci-fk-vcn`
@@ -19,15 +22,15 @@ This deployment creates:
 - one **managed SSH Bastion session** targeting the private VM
 
 Key subnets:
-- `bastion` for the OCI Bastion private endpoint
-- `private_vm` for the workload
+- `fk-bastion-subnet` for the OCI Bastion private endpoint
+- `fk-private-vm-subnet` for the workload
 
 This is the most direct way to understand how the Bastion module behaves
 when used for secure access to a single private VM.
 
 ---
 
-## Deployment Steps
+## 🚀 Deployment Steps
 
 Initialize and apply the Terraform/OpenTofu configuration:
 
@@ -54,9 +57,14 @@ After a successful deployment, Terraform/OpenTofu will output:
 - the generated SSH command
 - the generated private SSH key as a sensitive output
 
+The example also includes a configurable wait after instance creation so OCI has
+time to activate the Bastion plugin before the managed SSH session is requested.
+The default is `600s`, because plugin activation is often slower than regular
+instance provisioning.
+
 ---
 
-## Access Flow
+## 🔐 Access Flow
 
 After deployment, export the generated private key:
 
@@ -86,7 +94,7 @@ Expected result:
 
 ---
 
-## Important Session Lifecycle Note
+## ⚠️ Important Session Lifecycle Note
 
 OCI Bastion sessions are temporary. Once the configured TTL expires, the session becomes inactive and may no longer be removable through `terraform destroy`.
 
@@ -97,7 +105,7 @@ For this reason:
 
 ---
 
-## Summary
+## ✅ Summary
 
 This example demonstrates:
 - how to deploy a **private OCI compute instance**
@@ -107,7 +115,44 @@ This example demonstrates:
 
 ---
 
-## Cleanup
+## 🖼️ OCI Console And Runtime Verification
+
+### Bastion Details
+
+<img src="01_private_vm_with_bastion_access_oci_console1.png" width="900"/>
+
+This view confirms that the Bastion resource is active and attached to the expected VCN and target subnet.
+It also shows the private endpoint IP address created inside `fk-bastion-subnet`.
+
+### Bastion Session
+
+<img src="01_private_vm_with_bastion_access_oci_console2.png" width="900"/>
+
+This view confirms that the managed SSH session was created successfully for target `fk-private-vm`.
+The session is active, uses port `22`, and connects as user `opc`.
+
+### Private VM Details
+
+<img src="01_private_vm_with_bastion_access_oci_console3.png" width="900"/>
+
+This view confirms that the private compute instance is running in the expected VCN and is not directly reachable from the internet.
+That matches the intended design of this example, where access is provided only through OCI Bastion Service.
+
+### Bastion Plugin Status
+
+<img src="01_private_vm_with_bastion_access_oci_console4.png" width="900"/>
+
+This view confirms that the Oracle Cloud Agent Bastion plugin is both enabled and in the `Running` state on the target VM.
+That plugin state is required for OCI to create and use a `MANAGED_SSH` Bastion session successfully.
+
+### SSH Validation
+
+An end-to-end SSH test was completed through the generated OCI Bastion session.
+Running the `session_ssh_command` and then executing `hostname` on the target returned `fk-private-vm`, confirming successful managed SSH access to the private instance.
+
+---
+
+## 🧹 Cleanup
 
 To remove all resources created by this example:
 
@@ -123,13 +168,13 @@ terraform destroy
 
 ---
 
-## Learn More
+## 🌐 Learn More
 
 Visit [FoggyKitchen.com](https://foggykitchen.com/) for OCI, multicloud, and Terraform/OpenTofu learning resources.
 
 ---
 
-## License
+## 🪪 License
 
 Licensed under the **Universal Permissive License (UPL), Version 1.0**.
 See [LICENSE](../../LICENSE) for more details.

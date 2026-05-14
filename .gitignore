@@ -4,16 +4,19 @@
 .AppleDouble
 .LSOverride
 
-# Local .terraform directories
-**/.terraform/*
+# Terraform/OpenTofu local working directories
+**/.terraform/
 
-# .tfstate files
+# Terraform/OpenTofu state and local variable files
 *.tfstate
 *.tfstate.*
-*.zip*
 *.tfvars
+*.tfvars.json
+.terraform.tfstate.lock.info
+crash.log
+crash.*.log
 
-# terraform lock file
+# Terraform/OpenTofu lock file
 **/.terraform.lock.hcl
 
 # Icon must end with two \r

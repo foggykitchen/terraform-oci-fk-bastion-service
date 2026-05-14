@@ -1,9 +1,12 @@
 module "bastion" {
-  source = "../.."
+  source = "git::https://github.com/mlinxfeld/terraform-oci-fk-bastion-service.git?ref=v1.0.0"
+  depends_on = [
+    time_sleep.wait_for_bastion_plugin
+  ]
 
   name                         = "fk-bastion"
   compartment_ocid             = var.compartment_ocid
-  target_subnet_id             = module.vcn.subnet_ids["bastion"]
+  target_subnet_id             = module.vcn.subnet_ids["fk-bastion-subnet"]
   client_cidr_block_allow_list = [var.operator_client_cidr]
 
   create_session                             = true

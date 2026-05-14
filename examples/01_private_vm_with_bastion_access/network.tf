@@ -65,13 +65,16 @@ module "vcn" {
   }
 
   subnets = {
-    bastion = {
+    fk-bastion-subnet = {
+      display_name               = "fk-bastion-subnet"
       cidr_block                 = "10.50.10.0/24"
       route_table_key            = "public"
       security_list_keys         = ["bastion"]
-      prohibit_public_ip_on_vnic = true
+      prohibit_internet_ingress  = false
+      prohibit_public_ip_on_vnic = false
     }
-    private_vm = {
+    fk-private-vm-subnet = {
+      display_name               = "fk-private-vm-subnet"
       cidr_block                 = "10.50.20.0/24"
       route_table_key            = "private"
       security_list_keys         = ["private_vm"]

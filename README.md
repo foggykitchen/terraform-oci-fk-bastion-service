@@ -58,7 +58,6 @@ This behavior comes from the OCI Bastion Service lifecycle model rather than fro
 terraform-oci-fk-bastion-service/
 ├── examples/
 │   ├── 01_private_vm_with_bastion_access/
-│   ├── 02_private_load_balancer_with_bastion_access/
 │   └── README.md
 ├── main.tf
 ├── inputs.tf
@@ -68,7 +67,7 @@ terraform-oci-fk-bastion-service/
 └── README.md
 ```
 
-All examples are runnable and demonstrate **incremental secure-access patterns**, starting from private SSH access to a single VM and progressing to private application access through a load balancer.
+The included example is runnable and demonstrates a focused **secure-access pattern** for private SSH access to a single VM.
 
 ---
 
@@ -187,7 +186,6 @@ module "bastion" {
 | Example | Description |
 |-------|-------------|
 | `01_private_vm_with_bastion_access` | Private OCI compute instance reachable only through OCI Bastion Service managed SSH |
-| `02_private_load_balancer_with_bastion_access` | Private OCI Load Balancer fronting private compute instances, accessed through OCI Bastion Service port forwarding |
 
 See [`examples/`](examples) for details.
 
