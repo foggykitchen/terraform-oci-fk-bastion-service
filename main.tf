@@ -34,9 +34,6 @@ resource "oci_bastion_session" "this" {
     target_resource_port                       = var.target_resource_port
   }
 
-  defined_tags  = var.defined_tags
-  freeform_tags = var.freeform_tags
-
   lifecycle {
     precondition {
       condition     = var.ssh_public_key != null && length(trimspace(var.ssh_public_key)) > 0
