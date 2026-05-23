@@ -77,7 +77,7 @@ The included example is runnable and demonstrates a focused **secure-access patt
 
 ```hcl
 module "bastion" {
-  source = "git::https://github.com/mlinxfeld/terraform-oci-fk-bastion-service.git?ref=v1.0.0"
+  source = "git::https://github.com/foggykitchen/terraform-oci-fk-bastion-service.git?ref=v1.0.0"
 
   name                         = "fk-bastion"
   compartment_ocid             = var.compartment_ocid
@@ -92,7 +92,7 @@ module "bastion" {
 
 ```hcl
 module "bastion" {
-  source = "git::https://github.com/mlinxfeld/terraform-oci-fk-bastion-service.git?ref=v1.0.0"
+  source = "git::https://github.com/foggykitchen/terraform-oci-fk-bastion-service.git?ref=v1.0.0"
 
   name                         = "fk-bastion"
   compartment_ocid             = var.compartment_ocid
@@ -113,7 +113,7 @@ module "bastion" {
 
 ```hcl
 module "bastion" {
-  source = "git::https://github.com/mlinxfeld/terraform-oci-fk-bastion-service.git?ref=v1.0.0"
+  source = "git::https://github.com/foggykitchen/terraform-oci-fk-bastion-service.git?ref=v1.0.0"
 
   name                         = "fk-bastion"
   compartment_ocid             = var.compartment_ocid
