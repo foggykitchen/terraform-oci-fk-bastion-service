@@ -1,5 +1,5 @@
 module "bastion" {
-  source = "git::https://github.com/foggykitchen/terraform-oci-fk-bastion-service.git?ref=v0.1.1"
+  source = "../.."
   depends_on = [
     time_sleep.wait_for_bastion_plugin
   ]
